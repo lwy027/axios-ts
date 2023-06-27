@@ -2,8 +2,12 @@
 import WYrequest from "../request";
 
 
-WYrequest.request({
+interface IhomeData {
+  data: any
+}
+
+WYrequest.request<IhomeData>({
   url: "/city/all"
 }).then(res => {
-  console.log(res.data)
+  console.log(res)
 })

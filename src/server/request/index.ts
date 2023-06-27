@@ -26,7 +26,7 @@ class WyRequest {
       return err
     })
 
-    //针对单个请求的拦截器
+    //针对不同的请求实例的拦截器
     if (config.interceptors) {
       this.instance.interceptors.request.use(
         config.interceptors.requestSuccessFn,
@@ -41,8 +41,28 @@ class WyRequest {
 
   }
 
-  request(config: WyAxiosRequestConfig) {
-    return this.instance.request(config)
+  request<T = any>(config: WyAxiosRequestConfig<T>) {
+
+    //针对单个请求设置特有的拦截器
+    if (config.interceptors?.requestSuccessFn) {
+      config = config.interceptors.requestSuccessFn(config)
+    }
+
+    //单个请求设置响应拦截器，因为我们直接把响应给返回出去了，所以正常时不能回调单个响应拦截器
+    //所以在promise中进行操作
+    return new Promise<T>((resolve, reject) => {
+
+      this.instance.request<any, T>(config).then(res => {
+        if (config.interceptors?.resposeSuccessFn) {
+          res = config.interceptors.resposeSuccessFn(res)
+        }
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+
+
+    })
   }
 
 }

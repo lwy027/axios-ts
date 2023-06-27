@@ -10,3 +10,19 @@ WYrequest2.request({
 }).then(res => {
   console.log(res)
 })
+
+
+WYrequest2.request({
+  url: "/home/highscore",
+  //单个请求添加拦截器
+  interceptors: {
+    requestSuccessFn(config) {
+      console.log("home/highscore的请求拦截器")
+      return config
+    },
+    resposeSuccessFn(res) {
+      console.log("home/highscore的响应拦截器")
+      return res
+    }
+  }
+})
