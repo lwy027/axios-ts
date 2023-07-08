@@ -67,16 +67,16 @@ class WyRequest {
 
 
   get<T = any>(config: WyAxiosRequestConfig<T>) {
-    this.request({ ...config, method: "get" })
+   return this.request({ ...config, method: "get" })
   }
   post<T = any>(config: WyAxiosRequestConfig<T>) {
-    this.request({ ...config, method: "post" })
+   return this.request({ ...config, method: "post" })
   }
   delete<T = any>(config: WyAxiosRequestConfig<T>) {
-    this.request({ ...config, method: "DELETE" })
+   return this.request({ ...config, method: "DELETE" })
   }
   patch<T = any>(config: WyAxiosRequestConfig<T>) {
-    this.request({ ...config, method: "PATCH" })
+   return this.request({ ...config, method: "PATCH" })
   }
 
 }
